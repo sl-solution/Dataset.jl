@@ -6,6 +6,8 @@ nunique(::_DUMMY_STRUCT) =  false
 stdze!(::_DUMMY_STRUCT) = false
 stdze(::_DUMMY_STRUCT) = false
 select(::_DUMMY_STRUCT) = false
+rescale(::_DUMMY_STRUCT) = false
+rescale(::_DUMMY_STRUCT) = false
 
 byrow(ds::AbstractDataset, ::typeof(Base.sum), cols::MultiColumnIndex = names(ds, Union{Missing, Number}); by = identity, threads = nrow(ds) > Threads.nthreads()*10) = row_sum(ds, by, cols, threads = threads)
 byrow(ds::AbstractDataset, ::typeof(Base.sum), col::ColumnIndex; by = identity, threads = nrow(ds) > Threads.nthreads()*10) = byrow(ds, sum, [col]; by = by, threads = threads)
@@ -237,6 +239,10 @@ byrow(ds::AbstractDataset, ::typeof(issorted), cols::MultiColumnIndex; threads =
 byrow(ds::AbstractDataset, ::typeof(stdze), cols::MultiColumnIndex = names(ds, Union{Missing, Number}); threads = true) = row_stdze(ds, cols, threads = threads)
 
 byrow(ds::AbstractDataset, ::typeof(stdze!), cols::MultiColumnIndex = names(ds, Union{Missing, Number}); threads = true) = row_stdze!(ds, cols, threads = threads)
+
+byrow(ds::AbstractDataset, ::typeof(rescale), cols::MultiColumnIndex=names(ds, Union{Missing,Number}); range=[0, 1], threads=true) = row_rescale(ds, cols, range=range, threads=threads)
+
+byrow(ds::AbstractDataset, ::typeof(rescale!), cols::MultiColumnIndex=names(ds, Union{Missing,Number}); range=[0, 1], threads=true) = row_rescale!(ds, cols, range=range, threads=threads)
 
 function byrow(ds::AbstractDataset, ::typeof(hash), cols::MultiColumnIndex = :; by = identity, mapformats = false, threads = nrow(ds) > Threads.nthreads()*10)
 	colsidx = multiple_getindex(index(ds), cols)

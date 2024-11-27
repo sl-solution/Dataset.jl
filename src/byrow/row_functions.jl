@@ -1002,6 +1002,31 @@ function row_stdze(ds::AbstractDataset , cols = names(ds, Union{Missing, Number}
     dscopy
 end
 
+function row_rescale!(ds::Dataset, cols=names(ds, Union{Missing,Number}); range, threads=true)
+  colsidx = IMD.index(ds)[cols]
+
+  mindata = IMD.row_minimum(ds, colsidx; threads=threads)
+  maxdata = IMD.row_maximum(ds, colsidx; threads=threads)
+  max_min = maxdata .- mindata
+
+  _rescale_fun(x) = ifelse.(isequal.(max_min, 0), missing, range[1] .+ (((x .- mindata) .* (range[2] - range[1])) ./ max_min))
+
+  for i in 1:length(colsidx)
+    IMD._columns(ds)[colsidx[i]] = _rescale_fun(IMD._columns(ds)[colsidx[i]])
+  end
+  removeformat!(ds, colsidx)
+  any(IMD.index(ds).sortedcols .∈ Ref(colsidx)) && IMD._reset_grouping_info!(ds)
+  IMD._modified(IMD._attributes(ds))
+  ds
+end
+
+function row_rescale(ds::AbstractDataset, cols=names(ds, Union{Missing,Number}); range, threads=true)
+  dscopy = copy(ds)
+  row_rescale!(dscopy, cols; range=range, threads=threads)
+  dscopy
+end
+
+
 function row_sort!(ds::Dataset, cols = names(ds, Union{Missing, Number}); kwargs...)
     colsidx = index(ds)[cols]
     T = mapreduce(eltype, promote_type, view(_columns(ds),colsidx))

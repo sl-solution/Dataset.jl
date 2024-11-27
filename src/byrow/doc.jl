@@ -80,6 +80,10 @@ function Docs.getdoc(x::typeof(byrow), y)
         return _get_doc_byrow("stdze!")
     elseif y == Tuple{typeof(stdze)}
         return _get_doc_byrow("stdze")
+    elseif y == Tuple{typeof(rescale!)}
+        return _get_doc_byrow("rescale!")
+    elseif y == Tuple{typeof(rescale)}
+        return _get_doc_byrow("rescale")
     else
         return _get_doc_byrow("generic")
     end
@@ -148,6 +152,9 @@ Perform a row-wise operation specified by `fun` on selected columns `cols`. Gene
 - `sort!`
 - `stdze`
 - `stdze!`
+- `rescale`
+- `rescale!`
+
 @@@@sum@@@@
     byrow(ds::AbstractDataset, sum, cols = names(ds, Number); [by = identity, threads])
 
@@ -1298,6 +1305,28 @@ julia> byrow(ds,stdze!,:)
     byrow(ds::AbstractDataset, stdze, cols; [threads])
 
 Variant of `byrow(stdze!)` which pass a copy of `ds` and leave `ds` untouched.
+
+@@@@rescale!@@@@
+    byrow(ds::Dataset, rescale!, cols; [range = [0, 1], threads])
+
+Replace each value in each row of `ds` for selected `cols` by its rescaled values. 
+Also known as min-max scaling or min-max normalization, rescaling is the simplest method and consists in rescaling the range of features to scale the range.
+The formula to rescale a range between an arbitrary set of values [a, b] is given as: a + ((x-min(x))(b-a)/(max(x)-min(x)). 
+
+Missing values are skipped from the calculation. When all values in a row are missing, it returns `missing`.
+If the maximum value of a row is equal to the minimum value of a row, the result will also be `missing`.
+
+
+Passing `range = [minval, mxval]` to define the range of rescale result.
+Passing `threads = false` disables multithreaded computations.
+
+See [`byrow(rescale)`](@ref)
+
+@@@@rescale@@@@
+    byrow(ds::AbstractDataset, rescale, cols; [range = [0, 1], threads])
+
+Variant of `byrow(rescale!)` which pass a copy of `ds` and leave `ds` untouched.
+
 @@@@generic@@@@
     byrow(ds::AbstractDataset, fun, cols; [threads])
 
