@@ -277,13 +277,22 @@ end
 """
     setinfo!(ds::AbstractDataset, s::String)
 
-sets `s` as the value for the `info` meta data of `ds`.
+Set `s` as the value for the `info` meta data of `ds`.
+
+See [`getinfo`](@ref)
 """
 function setinfo!(ds::AbstractDataset, s::String)
     _attributes(ds).meta.info[] = s
     _modified(_attributes(ds))
     s
 end
+"""
+    getinfo(ds::AbstractDataset)
+
+Get information set by `setinfo!`.
+
+See [`setinfo!`](@ref)
+"""
 function getinfo(ds::AbstractDataset)
     _attributes(ds).meta.info[]
 end

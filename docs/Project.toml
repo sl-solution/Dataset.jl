@@ -1,6 +1,6 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-Missings = "e1d29d7a-bbdc-5cf2-9ac0-f12de2c33e28"
+InMemoryDatasets = "5c01b14b-ab03-46ff-b164-14c663efdd9f"
 
 [compat]
 Documenter = "0.27"

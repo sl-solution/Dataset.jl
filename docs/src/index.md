@@ -45,3 +45,14 @@ InMemoryDatasets.jl. In particular it is not safe to directly access fields of t
 that are a part of public API of the InMemoryDatasets.jl package using e.g. the
 `getfield` function. Whenever some operation on fields of defined types is
 considered allowed an appropriate exported function should be used instead.
+
+```@contents
+Pages = ["lib/functions.md"]
+Depth = 2
+```
+
+## Index
+
+```@index
+Pages = ["lib/functions.md"]
+```

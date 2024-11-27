@@ -1,7 +1,7 @@
 using Documenter
 using InMemoryDatasets
 
-# DocMeta.setdocmeta!(InMemoryDatasets, :DocTestSetup, :(using InMemoryDatasets); recursive=true)
+DocMeta.setdocmeta!(InMemoryDatasets, :DocTestSetup, :(using InMemoryDatasets); recursive=true)
 
 # Build documentation.
 # ====================
@@ -9,7 +9,7 @@ using InMemoryDatasets
 makedocs(
     # options
     # modules = [InMemoryDatasets],
-    doctest = false,
+    doctest = false, # this needs more work
     clean = false,
     sitename = "InMemoryDatasets",
     # format = Documenter.HTML(
@@ -34,10 +34,10 @@ makedocs(
             "Joins" => "man/joins.md"
         ],
         "Gallery" => "man/gallery.md",
-        "Performance tips" => "man/performance.md"
-        # "API" => Any[
-        #     "Functions" => "lib/functions.md"
-        # ]
+        "Performance tips" => "man/performance.md",
+        "API" => Any[
+            "Functions" => "lib/functions.md"
+        ]
     ],
     strict = true
 )

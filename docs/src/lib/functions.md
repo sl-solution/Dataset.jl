@@ -1,4 +1,4 @@
-<!-- ```@meta
+```@meta
 CurrentModule = InMemoryDatasets
 ```
 
@@ -11,6 +11,7 @@ Pages = ["functions.md"]
 ## Constructing data set
 ```@docs
 copy
+repeat!
 similar
 ```
 
@@ -23,6 +24,7 @@ setformat!
 ## Summary information
 ```@docs
 content
+getinfo
 ncol
 ndims
 nrow
@@ -38,36 +40,27 @@ rename
 rename!
 ```
 
-## Mutating and transforming data sets
+## Modifying data sets
 ```@docs
 append!
-combine
 flatten
-hcat
+flatten!
 insertcols!
 map
 map!
-modify
-modify!
+mapcols
 push!
 repeat
 repeat!
-select
-select!
 update
 update!
 ```
 
 ## Transposing and reshaping data sets
 ```@docs
+flatten
+flatten!
 transpose
-```
-
-## Sorting
-```@docs
-sort
-sort!
-sortperm
 ```
 
 ## Joining
@@ -82,23 +75,19 @@ leftjoin!
 outerjoin
 semijoin
 semijoin!
-```
-
-## Grouping
-```@docs
-groupby
-groupby!
-ungroup!
+update
+update!
 ```
 
 ## Filtering rows
 ```@docs
-byrow
+compare
 contains
 deleteat!
-empty
-empty!
+duplicates
 first
+filter
+filter!
 last
 mask
 unique
@@ -107,7 +96,6 @@ unique!
 
 ## Working with missing values
 ```@docs
-byrow
 completecases
 dropmissing
 dropmissing!
@@ -118,17 +106,10 @@ map!
 ## Statistics
 ```@docs
 lag
+lag!
 lead
-maximum
-mean
-median
-minimum
+lead!
 rescale
 stdze
-sum
 topk
-var
-std
-wmean
-wsum
-``` -->
+```
